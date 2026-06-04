@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fishing-forum
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fishing-forum
+  template:
+    metadata:
+      labels:
+        app: fishing-forum
+    spec:
+      containers:
+        - name: app
+          image: krakos01/chmura_project:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: fishing-forum-config
+            - secretRef:
+                name: fishing-forum-secrets
+          # No Flyway and no automatic schema updates in deployment
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+      volumes:
+        - name: uploads
+          emptyDir: {}
