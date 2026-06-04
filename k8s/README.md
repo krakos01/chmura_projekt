@@ -15,7 +15,7 @@ Apply manifests in this order:
 Before applying, make sure:
 - The backend image name in `app-deployment.yaml` points to an image your cluster can pull, or load a local image into Minikube.
 - `secret.yaml` contains real values.
-- 
+- Databse schema is initialised (see below). 
 
 Example local Minikube flow:
 
