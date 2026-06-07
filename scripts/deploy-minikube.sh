@@ -13,6 +13,12 @@ fi
 echo "==> Building images in Minikube (if not already built)"
 "$ROOT_DIR/scripts/build-images.sh"
 
+# Ensure ingress addon is enabled when running in Minikube
+if command -v minikube >/dev/null 2>&1; then
+  echo "==> Ensuring Minikube ingress addon is enabled"
+  minikube addons enable ingress || true
+fi
+
 echo "==> 1/6 Applying ConfigMap and Secrets"
 kubectl apply -f "$K8S_DIR/configmap.yaml"
 kubectl apply -f "$K8S_DIR/secret.yaml"
@@ -40,10 +46,19 @@ kubectl apply -f "$K8S_DIR/frontend-deployment.yaml"
 kubectl apply -f "$K8S_DIR/frontend-service.yaml"
 kubectl rollout status deployment/fishing-forum-frontend --timeout=120s
 
+# Apply Ingress manifest to expose frontend and route API/uploads to backend
+if [[ -f "$K8S_DIR/ingress.yaml" ]]; then
+  echo "==> Applying Ingress manifest"
+  kubectl apply -f "$K8S_DIR/ingress.yaml"
+fi
+
 echo "==> 6/6 Deployment status"
 kubectl get pods,svc,pvc
 
 echo ""
 echo "Access the application:"
+echo "  # If using Ingress, map host 'fishnet.local' to the Minikube IP and open http://fishnet.local"
+echo "  # To get the Minikube IP:"
+echo "  minikube ip"
+echo "  # Or (without Ingress) expose the frontend service URL:"
 echo "  minikube service fishing-forum-frontend --url"
-echo "  # or open http://$(minikube ip):30080"

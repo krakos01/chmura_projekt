@@ -199,6 +199,37 @@ minikube service fishing-forum-frontend --url
 
 Or directly: `http://$(minikube ip):30080`
 
+### Using Ingress (recommended)
+
+This project includes an `ingress.yaml` manifest that routes host `fishnet.local` to the frontend
+and proxies `/api` and `/uploads` to the backend. To use it locally with Minikube:
+
+1. Enable the Minikube ingress addon (the deploy script does this automatically):
+
+```bash
+minikube addons enable ingress
+```
+
+2. Apply the Ingress manifest after deploying frontend/backend (the `deploy-minikube.sh` script applies it automatically if present):
+
+```bash
+kubectl apply -f k8s/ingress.yaml
+```
+
+3. Map `fishnet.local` to the Minikube IP in your `/etc/hosts`:
+
+```bash
+echo "$(minikube ip) fishnet.local" | sudo tee -a /etc/hosts
+```
+
+4. Open the app:
+
+```bash
+open http://fishnet.local
+```
+
+TLS: `ingress.yaml` contains a `tls` section referencing `fishing-forum-tls`. For production, create a TLS secret (or use cert-manager). For local testing you can omit the `tls` block or create a self-signed secret.
+
 ---
 
 ## Seed data (optional)
