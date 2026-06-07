@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.gitignore
+*.md
+k8s
+scripts
+.env
+.env.*
+!.env.example

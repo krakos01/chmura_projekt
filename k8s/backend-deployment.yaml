@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fishing-forum-backend
+  labels:
+    app.kubernetes.io/name: fishnet
+    app.kubernetes.io/component: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fishing-forum-backend
+  template:
+    metadata:
+      labels:
+        app: fishing-forum-backend
+    spec:
+      containers:
+        - name: backend
+          image: fishing-forum-backend:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: fishing-forum-config
+            - secretRef:
+                name: fishing-forum-secrets
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+          readinessProbe:
+            httpGet:
+              path: /api/categories
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /api/categories
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 20
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: uploads-pvc

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fishing-forum-postgres
+  labels:
+    app.kubernetes.io/name: fishnet
+    app.kubernetes.io/component: database
+spec:
+  selector:
+    app: fishing-forum-postgres
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP

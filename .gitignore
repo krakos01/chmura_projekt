@@ -1,0 +1,26 @@
+# Java / Maven
+backend/target/
+backend/*.jar
+backend/.mvn/
+.mvn/
+*.class
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env*
+.env
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.iml
+*.iws
+
+# System
+.DS_Store
+Thumbs.db
+
+# Kubernetes / Local temp
+uploads/

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fishing-forum-config
+  labels:
+    app.kubernetes.io/name: fishnet
+    app.kubernetes.io/component: backend
+data:
+  DB_URL: jdbc:postgresql://fishing-forum-postgres:5432/fishing_forum
+  UPLOAD_DIR: /app/uploads
