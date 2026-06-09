@@ -1,0 +1,45 @@
+# admin - pełny dostęp
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: fishnet-admin
+rules:
+- apiGroups: ["*"]
+  resources:  ["*"]
+  verbs:  ["*"]
+
+
+---
+# monitoring
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: fishnet-viewer
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "persistentvolumeclaims", "pods/log"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "list", "watch"]
+
+
+---
+# tylko backend
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: fishnet-backend
+rules:
+# Podgląd podów i logów
+- apiGroups: [""]
+  resources: ["pods/log", "pods"]
+  verbs: ["get", "list", "watch"]
+# Restart deploymentu
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  resourceNames: ["fishing-forum-backend"]
+  verbs: ["get", "list", "watch", "patch", "update"]

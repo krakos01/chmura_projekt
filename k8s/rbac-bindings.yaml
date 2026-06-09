@@ -1,0 +1,49 @@
+# Admin
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: fishnet-admin-binding
+  namespace: default
+subjects:
+- kind: User
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: fishnet-admins
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: fishnet-admin
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Monitoring
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: fishnet-viewer-binding
+  namespace: default
+subjects:
+- kind: User
+  name: monitoring-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: fishnet-viewer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Backend dev
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: backend-manager-binding
+  namespace: default
+subjects:
+- kind: User
+  name: backend-dev
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: fishnet-backend
+  apiGroup: rbac.authorization.k8s.io
