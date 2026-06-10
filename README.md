@@ -57,7 +57,7 @@ lub mapuj fishnet.local do minikube IP i otwórz fishnet.local w przeglądarce
 - resources/application.yml zmieniony secret
 - usunięty Flyway
 
-
+### Frontend w całości wygenerowany
 
 ### Kubernetres wygenerowany, oprócz
 - ingress.yaml zmienione hosy i dodane 'nginx.ingress.kubernetes.io/proxy-body-size: "10m"'
