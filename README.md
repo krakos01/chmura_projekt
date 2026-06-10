@@ -46,8 +46,20 @@ Gdy skrypt zakończy działanie, aplikacja zostanie wdrożona w klastrze. Aby uz
 minikube service fishing-forum-frontend --url
 ```
 
-Otwórz wygenerowany link w swojej przeglądarce internetowej.
+lub mapuj fishnet.local do minikube IP i otwórz fishnet.local w przeglądarce
 
-### Dodatkowe informacje
-- Aby sprawdzić status poszczególnych komponentów (podów) w klastrze, użyj polecenia: `kubectl get pods`
-- W przypadku wprowadzania zmian w kodzie, wystarczy zbudować nowe obrazy poleceniem `./scripts/build-images.sh`, a następnie zrestartować wybrane pody (np. `kubectl rollout restart deployment/fishing-forum-backend`).
+
+
+
+
+## Wykorzystanie AI
+### Backend w całości wygenerowany, oprócz
+- resources/application.yml zmieniony secret
+- usunięty Flyway
+
+
+
+### Kubernetres wygenerowany, oprócz
+- ingress.yaml zmienione hosy i dodane 'nginx.ingress.kubernetes.io/proxy-body-size: "10m"'
+- backend-deployment.yaml, frontend-deployment.yaml i postgres-deployment.yaml dodane requests i limits
+- rbac.yaml

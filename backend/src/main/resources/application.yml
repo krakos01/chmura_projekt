@@ -22,7 +22,7 @@ spring:
 
 app:
   jwt:
-    secret: ${JWT_SECRET:change-me-change-me-change-me-change-me}
+    secret: ${JWT_SECRET:dawid-dawid-dawid-dawid-dawid-dawid-dawid}
     expirationMinutes: 120
   upload:
     dir: ${UPLOAD_DIR:uploads}
